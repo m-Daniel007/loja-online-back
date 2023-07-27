@@ -1,8 +1,9 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MorganMiddleware } from '@nest-middlewares/morgan';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [],
+  imports: [UserModule],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

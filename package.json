@@ -23,6 +23,7 @@
     "-": "^0.0.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "@types/ansi-colors": "^3.2.2",
     "ansi-colors": "^4.1.3",
