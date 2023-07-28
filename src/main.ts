@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(8000, () => {
     console.log(
-      color.italic.cyanBright.bold('Servidor rodando na porta 8000 🚀'),
+      color.italic.blueBright.bold('Servidor rodando na porta 8000 🚀'),
     );
   });
 }
