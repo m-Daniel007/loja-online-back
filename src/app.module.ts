@@ -3,18 +3,25 @@ import { MorganMiddleware } from '@nest-middlewares/morgan';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostgresConfigService } from './config/postgres.config.service';
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['.env'],
     }),
-    TypeOrmModule.forRootAsync({
-      useClass: PostgresConfigService,
-      inject: [PostgresConfigService],
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      database: process.env.DB_NAME,
+      host: process.env.DB_HOST,
+      password: process.env.DB_PASSWORD,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      entities: [`${__dirname}/**/*.entity{.js,.ts}`],
+      migrations: [`${__dirname}/config/migrations/{.ts,*.js}`],
+      migrationsRun: true,
     }),
+    UserModule,
   ],
 })
 export class AppModule {
