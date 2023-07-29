@@ -6,28 +6,25 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'user' })
-export class UserEntity {
+@Entity({ name: 'Address' })
+export class AddressEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
 
-  @Column({ nullable: false })
-  name: string;
+  @Column({name:'user_id', nullable: false })
+  userId: number;
+
+  @Column({ nullable: true })
+  complement: string;
+
+  @Column({name:'number', nullable: false })
+  numberAddress: number;
 
   @Column({ nullable: false })
-  email: string;
+  cep: string;
 
-  @Column({ nullable: false })
-  password: string;
-
-  @Column({ nullable: false })
-  phone: string;
-
-  @Column({ nullable: false })
-  cpf: string;
-
-  @Column({ name: 'type_user', nullable: false })
-  typeUser: number;
+  @Column({ name:'city_id',nullable: false })
+  cityId: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

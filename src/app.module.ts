@@ -3,6 +3,9 @@ import { MorganMiddleware } from '@nest-middlewares/morgan';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CityModule } from './city/city.module';
+import { AddressModule } from './address/address.module';
+import { StateModule } from './state/state.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       migrationsRun: true,
     }),
     UserModule,
+    CityModule,
+    AddressModule,
+    StateModule,
   ],
 })
 export class AppModule {
