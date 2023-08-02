@@ -38,7 +38,6 @@ export class UserEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
 
-  // @OneToMany(() => AddressEntity, (address) => address.user)
-  // //@JoinColumn({ name: 'address_id', referencedColumnName: 'id' })
-  // addresses?: AddressEntity[];
+  @OneToMany(() => AddressEntity, (address) => address.user)
+  addresses?: AddressEntity[];
 }

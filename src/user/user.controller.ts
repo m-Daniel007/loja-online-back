@@ -28,10 +28,15 @@ export class UserController {
     );
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
+  @Get('/:userId')
+  async findUserByIdByAddress(
+    @Param('userId') userId: number,
+  ): Promise<ReturnUserDto> {
+    const user = new ReturnUserDto(
+      await this.userService.findUserByIdByAddressService(userId),
+    );
+    return user;
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: any) {

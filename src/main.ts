@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(8000, () => {
     console.log(
-      color.italic.blueBright.bold('Servidor rodando na porta 8000 🚀'),
+      color.italic.yellowBright.bold('Servidor rodando na porta 8000 🚀'),
     );
   });
 }
