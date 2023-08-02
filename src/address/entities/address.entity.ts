@@ -2,11 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserEntity } from 'user/entities/user.entity';
 
-@Entity({ name: 'Address' })
+@Entity({ name: 'address' })
 export class AddressEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
@@ -31,4 +34,8 @@ export class AddressEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
+
+  // @ManyToOne(() => UserEntity, (user) => user.addresses)
+  // @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  // user?: UserEntity;
 }
