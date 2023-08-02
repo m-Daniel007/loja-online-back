@@ -44,7 +44,13 @@ export class UserService {
       where: {
         id: userId,
       },
-      relations: ['addresses'],
+      relations: {
+        addresses: {
+          city: {
+            state: true,
+          },
+        },
+      },
     });
     return user;
   }
