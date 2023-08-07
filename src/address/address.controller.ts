@@ -10,11 +10,15 @@ import {
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressEntity } from './entities/address.entity';
+import { Roles } from 'decorators/roles.decorators';
+import { UserType } from 'user/enum/userType.unum';
+
 
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
+  @Roles(UserType.User)
   @Post(':userId')
   async createAddress(
     @Body() createAddress: CreateAddressDto,
@@ -23,7 +27,7 @@ export class AddressController {
     const saveAddress = await this.addressService.createAddressService(
       createAddress,
       userId,
-    )
+    );
     return saveAddress;
   }
 
