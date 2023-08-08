@@ -12,6 +12,7 @@ import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressEntity } from './entities/address.entity';
 import { Roles } from 'decorators/roles.decorators';
 import { UserType } from 'user/enum/userType.unum';
+import { UserId } from 'decorators/userId.decorator';
 
 
 @Controller('address')
@@ -19,10 +20,10 @@ export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Roles(UserType.User)
-  @Post(':userId')
+  @Post()
   async createAddress(
     @Body() createAddress: CreateAddressDto,
-    @Param('userId') userId: number,
+    @UserId() userId: number,
   ): Promise<AddressEntity> {
     const saveAddress = await this.addressService.createAddressService(
       createAddress,
