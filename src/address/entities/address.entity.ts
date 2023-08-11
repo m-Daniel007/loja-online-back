@@ -1,4 +1,4 @@
-import { CityEntity } from 'city/entities/city.entity';
+import { CityEntity } from '../../city/entities/city.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from 'user/entities/user.entity';
+import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity({ name: 'address' })
 export class AddressEntity {

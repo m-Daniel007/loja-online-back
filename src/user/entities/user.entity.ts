@@ -1,9 +1,8 @@
-import { AddressEntity } from 'address/entities/address.entity';
+import { AddressEntity } from '../../address/entities/address.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
