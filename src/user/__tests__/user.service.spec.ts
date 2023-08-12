@@ -86,6 +86,4 @@ describe('UserService', () => {
   it('should return error if user exist', async () => {
     expect(service.createUserService(createUserMock)).rejects.toThrowError();
   });
-
-  
 });
