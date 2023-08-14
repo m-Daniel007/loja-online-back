@@ -1,11 +1,11 @@
-import { LoginPayloadDto } from 'auth/dto/loginPayload.dto';
+import { LoginPayloadDto } from '../auth/dto/loginPayload.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserEntity } from 'user/entities/user.entity';
+import { UserEntity } from '../user/entities/user.entity';
 import { LoginDto } from './dto/login.dto';
-import { UserService } from 'user/user.service';
+import { UserService } from '../user/user.service';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { ReturnUserDto } from 'user/dto/returnUser.dto';
+import { ReturnUserDto } from '../user/dto/returnUser.dto';
 import { ReturnLoginDto } from './dto/returnLogin.dto';
 
 
@@ -29,7 +29,7 @@ export class AuthService {
 
     return {
       user: new ReturnUserDto(user),
-      token: await this.jwtService.signAsync({ ...new LoginPayloadDto(user) }),
+      token: this.jwtService.sign({ ...new LoginPayloadDto(user) }),
     };
   }
 }

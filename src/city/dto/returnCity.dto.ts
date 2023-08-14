@@ -1,5 +1,5 @@
-import { CityEntity } from 'city/entities/city.entity';
-import { ReturnStateDto } from 'state/dto/returnState.dto';
+import { CityEntity } from '../entities/city.entity';
+import { ReturnStateDto } from '../../state/dto/returnState.dto';
 
 export class ReturnCityDto {
   name: string;

@@ -1,5 +1,5 @@
-import { AddressEntity } from 'address/entities/address.entity';
-import { ReturnCityDto } from 'city/dto/returnCity.dto';
+import { AddressEntity } from '../entities/address.entity';
+import { ReturnCityDto } from '../../city/dto/returnCity.dto';
 
 export class ReturnAddressDto {
   complement: string;
