@@ -13,13 +13,13 @@ import { AddressEntity } from './entities/address.entity';
 import { Roles } from 'decorators/roles.decorators';
 import { UserType } from 'user/enum/userType.unum';
 import { UserId } from 'decorators/userId.decorator';
+import { ReturnAddressDto } from './dto/returnAddress.dto';
 
-
+@Roles(UserType.User, UserType.Admin)
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Roles(UserType.User)
   @Post()
   async createAddress(
     @Body() createAddress: CreateAddressDto,
@@ -32,10 +32,14 @@ export class AddressController {
     return saveAddress;
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.addressService.findAll();
-  // }
+  @Get()
+  async findAllAddressesByUserId(
+    @UserId() userId: number,
+  ): Promise<ReturnAddressDto[]> {
+    return (
+      await this.addressService.findAllAddressesByUserIdService(userId)
+    ).map((address) => new ReturnAddressDto(address));
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
