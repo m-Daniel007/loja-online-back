@@ -24,7 +24,7 @@ export class CategoryService {
 
     if (category) {
       throw new BadRequestException(
-        `Category name ${createCategory.name} exist`,
+        `Category name: ${createCategory.name} exist`,
       );
     }
     return this.categoryRepository.save(createCategory);
@@ -49,6 +49,19 @@ export class CategoryService {
 
     if (!category) {
       throw new NotFoundException(`Category name ${name} not found`);
+    }
+
+    return category;
+  }
+
+  async findCategoryById(categoryId: number): Promise<CategoryEntity> {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!category) {
+      throw new NotFoundException(`Category id: ${categoryId} not found`);
     }
 
     return category;
