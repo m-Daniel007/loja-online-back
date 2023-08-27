@@ -9,7 +9,6 @@ import { productMock } from '../mocks/product.mock';
 import { createProductMock } from '../mocks/createProduct.mock';
 import { returnDeleteMock } from '../mocks/returnDeleteProduct.mock';
 
-
 describe('ProductService', () => {
   let service: ProductService;
   let productRepository: Repository<ProductEntity>;
@@ -25,7 +24,7 @@ describe('ProductService', () => {
             findCategoryById: jest.fn().mockResolvedValue(categoryMock),
           },
         },
-      
+
         {
           provide: getRepositoryToken(ProductEntity),
           useValue: {
@@ -108,7 +107,9 @@ describe('ProductService', () => {
       .spyOn(categoryService, 'findCategoryById')
       .mockRejectedValue(new Error());
 
-    expect(service.createProductService(createProductMock)).rejects.toThrowError();
+    expect(
+      service.createProductService(createProductMock),
+    ).rejects.toThrowError();
   });
 
   it('should return product in find by id', async () => {
@@ -150,22 +151,22 @@ describe('ProductService', () => {
     expect(deleted).toEqual(returnDeleteMock);
   });
 
-  // it('should return produt after update', async () => {
-  //   const product = await service.updateProduct(
-  //     createProductMock,
-  //     productMock.id,
-  //   );
+  it('should return produt after update', async () => {
+    const product = await service.updateProductService(
+      createProductMock,
+      productMock.id,
+    );
 
-  //   expect(product).toEqual(productMock);
-  // });
+    expect(product).toEqual(productMock);
+  });
 
-  // it('should error in update product', async () => {
-  //   jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
+  it('should error in update product', async () => {
+    jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
 
-  //   expect(
-  //     service.updateProduct(createProductMock, productMock.id),
-  //   ).rejects.toThrowError();
-  // });
+    expect(
+      service.updateProductService(createProductMock, productMock.id),
+    ).rejects.toThrowError();
+  });
 
   // it('should return product pagination', async () => {
   //   const spy = jest.spyOn(productRepository, 'findAndCount');
