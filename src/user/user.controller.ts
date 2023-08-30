@@ -10,6 +10,11 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { ReturnUserDto } from './dto/returnUser.dto';
+import { UserType } from './enum/userType.unum';
+import { Roles } from '../decorators/roles.decorators';
+import { UserId } from '../decorators/userId.decorator';
+import { UserEntity } from './entities/user.entity';
+import { UpdateteUserDto } from './dto/updateUser.dto';
 
 @Controller('users')
 export class UserController {
@@ -37,10 +42,15 @@ export class UserController {
     return user;
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: any) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
+  @Roles(UserType.Admin, UserType.User)
+  @Patch()
+  async updateUser(
+    @Body() updateUser: UpdateteUserDto,
+    @UserId() userId: number,
+  ): Promise<UserEntity> {
+    return this.userService.updateUserService(updateUser, userId);
+  }
+
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {
