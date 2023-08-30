@@ -5,6 +5,7 @@ import { UserEntity } from '../entities/user.entity';
 import { userEntityMock } from '../__mocks__/user.mock';
 import { createUserMock } from '../__mocks__/createUser.mock';
 import { UserService } from '../user.service';
+import { updatePasswordInvalidMock, updatePasswordMock } from '../__mocks__/updateUser.mock.';
 
 describe('UserService', () => {
   let service: UserService;
@@ -85,5 +86,28 @@ describe('UserService', () => {
 
   it('should return error if user exist', async () => {
     expect(service.createUserService(createUserMock)).rejects.toThrowError();
+  });
+
+  it('should return user in update password', async () => {
+    const user = await service.updateUserService(
+      updatePasswordMock,
+      userEntityMock.id,
+    );
+
+    expect(user).toEqual(userEntityMock);
+  });
+
+  it('should return invalid password in error', async () => {
+    expect(
+      service.updateUserService(updatePasswordInvalidMock, userEntityMock.id),
+    ).rejects.toThrowError();
+  });
+
+  it('should return error in user not exist', async () => {
+    jest.spyOn(userRepository, 'findOne').mockResolvedValue(undefined);
+
+    expect(
+      service.updateUserService(updatePasswordMock, userEntityMock.id),
+    ).rejects.toThrowError();
   });
 });

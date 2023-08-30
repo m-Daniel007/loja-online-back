@@ -25,6 +25,7 @@ export class UserController {
     return this.userService.createUserService(createUser);
   }
 
+  @Roles(UserType.Admin)
   @Get()
   async getAllUsers(): Promise<ReturnUserDto[]> {
     return (await this.userService.getAllUserService()).map(
@@ -32,6 +33,7 @@ export class UserController {
     );
   }
 
+  @Roles(UserType.Admin)
   @Get('/:userId')
   async findUserByIdByAddress(
     @Param('userId') userId: number,
@@ -50,7 +52,6 @@ export class UserController {
   ): Promise<UserEntity> {
     return this.userService.updateUserService(updateUser, userId);
   }
-
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {
