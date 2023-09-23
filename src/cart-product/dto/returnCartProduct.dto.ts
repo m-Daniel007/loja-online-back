@@ -1,4 +1,4 @@
-import { CartProductEntity } from '../../cart-product/entites/cartProduct.entity';
+import { CartProductEntity } from '../entities/cartProduct.entity';
 import { ReturnCartDto } from '../../cart/dto/returnCart.dto';
 import { ReturnProductDto } from '../../product/dto/returnProduct.dto';
 
