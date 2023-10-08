@@ -10,9 +10,9 @@ import {
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressEntity } from './entities/address.entity';
-import { Roles } from 'decorators/roles.decorators';
-import { UserType } from 'user/enum/userType.unum';
-import { UserId } from 'decorators/userId.decorator';
+import { Roles } from '../decorators/roles.decorators';
+import { UserType } from '../user/enum/userType.unum';
+import { UserId } from '../decorators/userId.decorator';
 import { ReturnAddressDto } from './dto/returnAddress.dto';
 
 @Roles(UserType.User, UserType.Admin)
