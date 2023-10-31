@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from 'user/entities/user.entity';
+import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity({ name: 'order' })
 export class OrderEntity {

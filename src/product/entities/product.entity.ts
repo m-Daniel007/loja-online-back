@@ -1,4 +1,4 @@
-import { OrderProductEntity } from 'order-product/entities/orderProduct.entity';
+import { OrderProductEntity } from '../../order-product/entities/orderProduct.entity';
 import { CartProductEntity } from '../../cart-product/entities/cartProduct.entity';
 import { CategoryEntity } from '../../category/entities/category.entity';
 import {
