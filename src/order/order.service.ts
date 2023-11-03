@@ -1,3 +1,4 @@
+import { PaymentService } from './../payment/payment.service';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -9,9 +10,11 @@ export class OrderService {
   constructor(
     @InjectRepository(OrderEntity)
     private readonly orderEntity: Repository<OrderEntity>,
+    private readonly paymentService: PaymentService,
   ) {}
 
   async createOrderService(createOrder: CreateOrderDto, cartId: number) {
+    await this.paymentService.createPaymentService(createOrder);
     return null;
   }
 }

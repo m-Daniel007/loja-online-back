@@ -59,7 +59,6 @@ import { OrderProductModule } from './order-product/order-product.module';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
-    PaymentService,
   ],
 })
 export class AppModule {
