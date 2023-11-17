@@ -33,11 +33,11 @@ export abstract class PaymentEntity {
   @Column({ name: 'type', nullable: false })
   type: string;
 
-  @CreateDateColumn( { name: 'created_at' })
-  createdAt:Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt: Date 
 
   @OneToMany(() => OrderEntity, (order) => order.payment)
   orders?: OrderEntity[];
