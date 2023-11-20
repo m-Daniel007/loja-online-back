@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, In, Repository } from 'typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { CreateProductDTO } from './dto/createProduct.dto';
 import { CategoryService } from '../category/category.service';
@@ -36,8 +36,18 @@ export class ProductService {
     return product;
   }
 
-  async findAllProductService(): Promise<ProductEntity[]> {
-    const products = await this.productRepository.find();
+  async findAllProductService(productId?: number[]): Promise<ProductEntity[]> {
+    let findOptions = {};
+
+    if (productId && productId.length > 0) {
+      findOptions = {
+        where: {
+          id: In(productId),
+        },
+      };
+    }
+
+    const products = await this.productRepository.find(findOptions);
 
     if (!products || products.length === 0) {
       throw new NotFoundException('Not found products');
