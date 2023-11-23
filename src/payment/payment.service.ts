@@ -6,7 +6,9 @@ import { Repository } from 'typeorm';
 import { PaymentCreditCardEntity } from './entities/paymentCreditCard.entity ';
 import { PaymentType } from '../payment-status/enum/paymentType.enum';
 import { PaymentPixEntity } from './entities/paymentPix.entity ';
-import { type } from 'os';
+import { ProductEntity } from '../product/entities/product.entity';
+import { CartEntity } from '../cart/entities/cart.entity';
+import { CartProductEntity } from '../cart-product/entities/cartProduct.entity';
 
 @Injectable()
 export class PaymentService {
@@ -17,26 +19,40 @@ export class PaymentService {
 
   async createPaymentService(
     createOrder: CreateOrderDto,
+    products: ProductEntity[],
+    cart: CartEntity,
   ): Promise<PaymentEntity> {
+    const finalPrice = cart.cartProduct
+      ?.map((cartProduct: CartProductEntity) => {
+        const product = products.find(
+          (product) => product.id === cartProduct.productId,
+        );
+        if (product) {
+          return cartProduct.amount * product.price;
+        }
+
+        return 0;
+      })
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
     if (createOrder.amountPayments) {
       const paymentCreditCard = new PaymentCreditCardEntity(
         PaymentType.Done,
+        finalPrice,
         0,
-        0,
-        0,
+        finalPrice,
         createOrder,
       );
-      console.log(paymentCreditCard);
-      return this.paymentRepository.save(paymentCreditCard)
+      return this.paymentRepository.save(paymentCreditCard);
     } else if (createOrder.codePix && createOrder.datePayment) {
       const paymentPix = new PaymentPixEntity(
         PaymentType.Done,
+        finalPrice,
         0,
-        0,
-        0,
+        finalPrice,
         createOrder,
       );
-       return  this.paymentRepository.save(paymentPix);
+      return this.paymentRepository.save(paymentPix);
     }
     throw new BadRequestException(
       'Amount Payments or code pix or date payment not found',
