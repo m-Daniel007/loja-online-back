@@ -1,6 +1,6 @@
 import { UserId } from './../decorators/userId.decorator';
 import { PaymentService } from './../payment/payment.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderEntity } from './entities/order.entity';
@@ -12,7 +12,6 @@ import { ProductService } from '../product/product.service';
 import { CartEntity } from '../cart/entities/cart.entity';
 import { ProductEntity } from '../product/entities/product.entity';
 import { OrderProductEntity } from '../order-product/entities/orderProduct.entity';
-import { use } from 'passport';
 
 @Injectable()
 export class OrderService {
@@ -75,8 +74,31 @@ export class OrderService {
 
     await this.createOrderProductUsingCart(cart, order.id, products);
 
-    // await this.cartService.clearCart(userId);
+    await this.cartService.clearCartService(userId);
 
     return order;
+  }
+
+  async findOrdersByUserId(userId: number): Promise<OrderEntity[]> {
+    const orders = await this.orderRepository.find({
+      where: {
+        userId,
+      },
+      relations: {
+        address: true,
+        ordersProduct: {
+          product: true,
+        },
+        payment: {
+          paymentStatus: true,
+        },
+      },
+    });
+
+    if (!orders || orders.length === 0) {
+      throw new NotFoundException('Orders not found');
+    }
+
+    return orders;
   }
 }
