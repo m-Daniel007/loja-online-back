@@ -8,7 +8,7 @@ import { productMock } from '../../product/mocks/product.mock';
 import { returnDeleteMock } from '../../product/mocks/returnDeleteProduct.mock';
 import { cartMock } from '../../cart/__mocks__/cart.mocks';
 import { NotFoundException } from '@nestjs/common';
-import { cartProductMock } from '../../cart-product/__mocks/cart-product.mocks';
+import { cartProductMock } from '../__mocks__/cart-product.mocks';
 import { insertCartMock } from '../../cart/__mocks__/insertCart.mock';
 import { updateCartMock } from '../../cart/__mocks__/updateCart.mock';
 
