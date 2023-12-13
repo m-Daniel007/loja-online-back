@@ -13,12 +13,11 @@ export class OrderController {
     @Body() createOrder: CreateOrderDto,
     @Param('cartId') cartId: number,
     @UserId() userId: number,
-  ) {
+  ): Promise<OrderEntity> {
     return this.orderService.createOrderService(createOrder, userId);
   }
   @Get()
   async findOrdersByUserId(@UserId() userId: number): Promise<OrderEntity[]> {
     return this.orderService.findOrdersByUserId(userId);
   }
-
 }
