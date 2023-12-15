@@ -36,26 +36,37 @@ export class ProductService {
     return product;
   }
 
-  async findAllProductService(productId?: number[]): Promise<ProductEntity[]> {
-    let findOptions = {};
+  async findAllProductService(
+    productId?: number[],
+    isFindRelations?: boolean,
+  ): Promise<ProductEntity[]> {
+    {
+      let findOptions = {};
 
-    if (productId && productId.length > 0) {
-      findOptions = {
-        where: {
-          id: In(productId),
-        },
-      };
+      if (productId && productId.length > 0) {
+        findOptions = {
+          where: {
+            id: In(productId),
+          },
+        };
+      }
+      if (isFindRelations) {
+        findOptions = {
+          ...findOptions,
+          relations: {
+            category: true,
+          },
+        };
+      }
+      const products = await this.productRepository.find(findOptions);
+
+      if (!products || products.length === 0) {
+        throw new NotFoundException('Not found products');
+      }
+
+      return products;
     }
-
-    const products = await this.productRepository.find(findOptions);
-
-    if (!products || products.length === 0) {
-      throw new NotFoundException('Not found products');
-    }
-
-    return products;
   }
-
   async deleteProductService(productId: number): Promise<DeleteResult> {
     await this.findProductById(productId);
     return await this.productRepository.delete({ id: productId });
