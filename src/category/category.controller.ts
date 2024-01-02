@@ -4,12 +4,12 @@ import { Roles } from '../decorators/roles.decorators';
 import { UserType } from '../user/enum/userType.unum';
 import { CategoryEntity } from './entities/category.entity';
 import { createCategoryDto } from './dto/createCastegory.dto';
-import {ReturnCategoryDto } from './dto/returnCategory.dto';
+import { ReturnCategoryDto } from './dto/returnCategory.dto';
 
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
-  
+
   @Roles(UserType.Admin)
   @Post()
   async createCategory(
@@ -20,8 +20,6 @@ export class CategoryController {
 
   @Get()
   async findAllCategories(): Promise<ReturnCategoryDto[]> {
-    return (await this.categoryService.findAllCategoriesService()).map(
-      (category) => new ReturnCategoryDto(category),
-    );
+    return this.categoryService.findAllCategoriesService();
   }
 }

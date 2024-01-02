@@ -1,16 +1,23 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, In, Repository } from 'typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { CreateProductDTO } from './dto/createProduct.dto';
 import { CategoryService } from '../category/category.service';
 import { updateProductDto } from './dto/updateProduct.dto';
+import { CountProduct } from './dto/countProduct.dto';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
+    @Inject(forwardRef(() => CategoryService))
     private readonly categoryService: CategoryService,
   ) {}
 
@@ -81,5 +88,12 @@ export class ProductService {
       ...product,
       ...updateProduct,
     });
+  }
+  async countProductByCategoryId(): Promise<CountProduct[]> {
+    return this.productRepository
+      .createQueryBuilder('product')
+      .select('product.category_id,COUNT(*) as total')
+      .groupBy('product.category_id')
+      .getRawMany();
   }
 }

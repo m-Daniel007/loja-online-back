@@ -4,8 +4,8 @@ import { CategoryEntity } from '../entities/category.entity';
 export class ReturnCategoryDto {
   id: number;
   name: string;
-  amountProducts?: number;
   products?: ReturnProductDto[];
+  amountProducts?: number;
 
   constructor(categoryEntity: CategoryEntity, amountProducts?: number) {
     this.id = categoryEntity.id;
